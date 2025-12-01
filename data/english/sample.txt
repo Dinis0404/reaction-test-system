@@ -1,0 +1,17 @@
+题目1：Which method adds an element to the end of an array?
+A. push()
+B. pop()
+C. shift()
+D. unshift()
+答案：A
+解析：push() adds elements to the end of an array.
+
+---
+
+题目2：Which HTML tag defines the main content of a document?
+A. <div>
+B. <section>
+C. <main>
+D. <article>
+答案：C
+解析：<main> 标签用于定义页面的主要内容区域。

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>填空题测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .question { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; }
+        .input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+        .result { margin-top: 10px; padding: 10px; border-radius: 4px; }
+        .correct { background: #d4edda; color: #155724; }
+        .incorrect { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>填空题功能测试</h1>
+    
+    <div class="question">
+        <h3>1. 水在攝氏____度時結冰</h3>
+        <input type="text" class="input" placeholder="請輸入答案" id="answer1">
+        <button onclick="checkAnswer(1, '0')">檢查答案</button>
+        <div id="result1"></div>
+    </div>
+
+    <div class="question">
+        <h3>2. 中國的首都是____</h3>
+        <input type="text" class="input" placeholder="請輸入答案" id="answer2">
+        <button onclick="checkAnswer(2, '北京')">檢查答案</button>
+        <div id="result2"></div>
+    </div>
+
+    <div class="question">
+        <h3>3. ____是最大的海洋</h3>
+        <input type="text" class="input" placeholder="請輸入答案" id="answer3">
+        <button onclick="checkAnswer(3, '太平洋')">檢查答案</button>
+        <div id="result3"></div>
+    </div>
+
+    <script>
+        function checkAnswer(questionId, correctAnswer) {
+            const input = document.getElementById('answer' + questionId);
+            const resultDiv = document.getElementById('result' + questionId);
+            const userAnswer = input.value.trim();
+            
+            if (userAnswer === '') {
+                resultDiv.innerHTML = '<span style="color: orange;">請輸入答案</span>';
+                return;
+            }
+            
+            if (userAnswer === correctAnswer) {
+                resultDiv.innerHTML = '<span class="correct">✅ 答對了！正確答案：' + correctAnswer + '</span>';
+            } else {
+                resultDiv.innerHTML = '<span class="incorrect">❌ 答錯了！正確答案是：' + correctAnswer + '</span>';
+            }
+        }
+    </script>
+</body>
+</html>

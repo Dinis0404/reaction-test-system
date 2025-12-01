@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单测试 - 结算功能</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .options {
+            margin: 10px 0;
+        }
+        .option {
+            margin: 5px 0;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+        .option.selected {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e8f5e8;
+            border-radius: 5px;
+            display: none;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>简单测试 - 结算功能</h1>
+        
+        <div id="questions">
+            <div class="question" data-id="1">
+                <h3>问题 1: 1 + 1 = ?</h3>
+                <div class="options">
+                    <div class="option" data-index="0">A. 1</div>
+                    <div class="option" data-index="1">B. 2</div>
+                    <div class="option" data-index="2">C. 3</div>
+                    <div class="option" data-index="3">D. 4</div>
+                </div>
+            </div>
+            
+            <div class="question" data-id="2">
+                <h3>问题 2: 2 × 3 = ?</h3>
+                <div class="options">
+                    <div class="option" data-index="0">A. 4</div>
+                    <div class="option" data-index="1">B. 5</div>
+                    <div class="option" data-index="2">C. 6</div>
+                    <div class="option" data-index="3">D. 7</div>
+                </div>
+            </div>
+            
+            <div class="question" data-id="3">
+                <h3>问题 3: 10 ÷ 2 = ?</h3>
+                <div class="options">
+                    <div class="option" data-index="0">A. 3</div>
+                    <div class="option" data-index="1">B. 4</div>
+                    <div class="option" data-index="2">C. 5</div>
+                    <div class="option" data-index="3">D. 6</div>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="submitAnswers()">提交答案</button>
+        
+        <div id="result" class="result">
+            <div class="score" id="score">得分: 0</div>
+            <div id="details"></div>
+        </div>
+    </div>
+
+    <script>
+        // 正确答案
+        const correctAnswers = {
+            1: 1, // 问题1的正确答案是B (index=1)
+            2: 2, // 问题2的正确答案是C (index=2)
+            3: 2  // 问题3的正确答案是C (index=2)
+        };
+
+        // 用户答案
+        const userAnswers = {};
+
+        // 选择答案
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.question');
+                const questionId = parseInt(question.dataset.id);
+                const optionIndex = parseInt(this.dataset.index);
+                
+                // 清除当前问题的其他选择
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // 标记当前选择
+                this.classList.add('selected');
+                
+                // 保存用户答案
+                userAnswers[questionId] = optionIndex;
+                
+                console.log(`问题 ${questionId} 选择了选项 ${optionIndex}`);
+            });
+        });
+
+        // 提交答案
+        function submitAnswers() {
+            // 检查是否所有问题都回答了
+            const totalQuestions = Object.keys(correctAnswers).length;
+            const answeredQuestions = Object.keys(userAnswers).length;
+            
+            if (answeredQuestions < totalQuestions) {
+                if (!confirm(`您还有 ${totalQuestions - answeredQuestions} 题未回答，确定要提交吗？`)) {
+                    return;
+                }
+            }
+            
+            // 计算分数
+            let correctCount = 0;
+            const results = [];
+            
+            for (let questionId in correctAnswers) {
+                const userAnswer = userAnswers[questionId];
+                const correctAnswer = correctAnswers[questionId];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) {
+                    correctCount++;
+                }
+                
+                results.push({
+                    questionId: parseInt(questionId),
+                    userAnswer: userAnswer,
+                    correctAnswer: correctAnswer,
+                    isCorrect: isCorrect
+                });
+            }
+            
+            const score = Math.round((correctCount / totalQuestions) * 100);
+            
+            // 显示结果
+            document.getElementById('score').textContent = `得分: ${score}`;
+            
+            let detailsHtml = '<h3>详细结果:</h3>';
+            results.forEach(result => {
+                detailsHtml += `
+                    <div style="margin: 10px 0; padding: 10px; background: ${result.isCorrect ? '#d4edda' : '#f8d7da'}; border-radius: 5px;">
+                        <strong>问题 ${result.questionId}:</strong> 
+                        您的答案: ${result.userAnswer !== undefined ? String.fromCharCode(65 + result.userAnswer) : '未回答'} | 
+                        正确答案: ${String.fromCharCode(65 + result.correctAnswer)} | 
+                        ${result.isCorrect ? '✓ 正确' : '✗ 错误'}
+                    </div>
+                `;
+            });
+            
+            document.getElementById('details').innerHTML = detailsHtml;
+            document.getElementById('result').style.display = 'block';
+            
+            // 滚动到结果区域
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+            
+            console.log('提交成功!');
+            console.log('得分:', score);
+            console.log('正确数:', correctCount, '/', totalQuestions);
+            console.log('详细结果:', results);
+        }
+    </script>
+</body>
+</html>

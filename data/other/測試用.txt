@@ -1,0 +1,51 @@
+题目1：JavaScript 中哪个方法用于向数组末尾添加元素？
+A. push()
+B. pop()
+C. shift()
+D. unshift()
+答案：A
+解析：push() 方法用于向数组末尾添加一个或多个元素。
+
+---
+
+题目2：CSS 中哪个属性用于设置元素的外边距？
+A. padding
+B. margin
+C. border
+D. spacing
+答案：B
+解析：margin 属性用于设置元素的外边距，即元素与周围元素之间的空间。
+
+---
+
+题目3：React 中用于更新组件状态的 Hook 是什么？
+A. useEffect
+B. useState
+C. useContext
+D. useReducer
+答案：B
+解析：useState 是 React 中用于在函数组件中添加状态管理的 Hook。
+
+---
+
+题目4：HTML5 中哪个标签用于定义文档的主要内容区域？
+A. <div>
+B. <section>
+C. <main>
+D. <article>
+答案：C
+解析：<main> 标签用于定义文档的主要内容区域，每个页面应该只有一个 main 元素。
+
+---
+
+题目5：Next.js 中用于进行服务端渲染的函数是什么？
+A. getServerSideProps
+B. getStaticProps
+C. getInitialProps
+D. getServerProps
+答案：A
+解析：getServerSideProps 是 Next.js 中用于在每个请求时获取数据的函数，实现服务端渲染。
+
+
+
+

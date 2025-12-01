@@ -1,0 +1,39 @@
+1. 以下哪个是编程语言？
+A. Python*
+B. Car
+C. Table
+D. Water
+答案：A
+解析：Python是一种流行的编程语言
+
+2. HTML代表什么？
+A. Hyper Text Markup Language*
+B. High Tech Modern Language
+C. Home Tool Markup Language
+D. Hyper Transfer Markup Protocol
+答案：A
+解析：HTML是超文本标记语言
+
+3. CSS主要用于什么？
+A. 样式设计*
+B. 数据处理
+C. 服务器配置
+D. 数据库管理
+答案：A
+解析：CSS用于网页样式设计
+
+4. JavaScript是什么语言？
+A. 脚本语言*
+B. 编译语言
+C. 标记语言
+D. 数据库语言
+答案：A
+解析：JavaScript是客户端脚本语言
+
+5. React是什么？
+A. JavaScript库*
+B. 编程语言
+C. 数据库
+D. 操作系统
+答案：A
+解析：React是用于构建用户界面的JavaScript库
