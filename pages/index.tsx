@@ -60,7 +60,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+<<<<<<< HEAD
       <main className="min-h-screen bg-site py-4 md:py-8 transition-colors duration-500">
+=======
+      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-4 md:py-8">
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
         <div className="w-full max-w-7xl mx-auto px-4">
           <header className="text-center mb-8 md:mb-12">
             <div className="inline-block p-4 bg-gray-800 rounded-2xl shadow-lg mb-4 border border-gray-700">
@@ -72,7 +76,11 @@ export default function Home() {
               反应力测试
             </h1>
             <p className="text-base md:text-xl text-gray-300 max-w-2xl mx-auto">
+<<<<<<< HEAD
               恭喜Furia奪得Blast香港對抗賽冠軍！
+=======
+              本周日LOL S15成都世界大賽，KT VS T1 ！！！
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
             </p>
           </header>
 
@@ -129,3 +137,7 @@ export default function Home() {
     </>
   );
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950

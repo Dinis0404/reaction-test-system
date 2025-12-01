@@ -3,10 +3,16 @@
 @tailwind utilities;
 
 :root {
+<<<<<<< HEAD
   --bg-start: #f8fafc;
   --bg-mid: #eef2ff;
   --bg-end: #f8fafc;
   --fg: #0f172a;
+=======
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 }
 
 * {
@@ -22,6 +28,7 @@ body {
 }
 
 body {
+<<<<<<< HEAD
   color: var(--fg);
   transition: background-color .4s ease, color .4s ease;
 }
@@ -35,6 +42,21 @@ html {}
   --bg-mid: #0f172a;
   --bg-end: #0b1220;
   --fg: #e5e7eb;
+=======
+  color: rgb(var(--foreground-rgb));
+}
+
+/* 强制深色主题 */
+html {
+  @apply dark;
+}
+
+/* 深色主题样式 */
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 }
 
 /* 可及性改进 */
@@ -71,7 +93,12 @@ input:focus-visible {
   .text-balance {
     text-wrap: balance;
   }
+<<<<<<< HEAD
   .bg-site {
     background: radial-gradient(1200px 600px at 80% 10%, var(--bg-mid) 0%, transparent 60%), linear-gradient(to bottom right, var(--bg-start), var(--bg-end));
   }
 }
+=======
+}
+
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950

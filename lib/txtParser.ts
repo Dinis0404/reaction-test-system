@@ -3,7 +3,10 @@
  * 
  * 支持的格式示例：
  * 
+<<<<<<< HEAD
  * 选择题格式：
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
  * 题目1：JavaScript 中哪个方法用于向数组末尾添加元素？
  * A. push()
  * B. pop()
@@ -14,12 +17,22 @@
  * 
  * ---
  * 
+<<<<<<< HEAD
  * 填空题格式：
  * 1. 水在攝氏____度時結冰
  * 答案：0
  * 
  * 2. 中國的首都是____
  * 答案：北京
+=======
+ * 题目2：CSS 中哪个属性用于设置元素的外边距？
+ * A. padding
+ * B. margin
+ * C. border
+ * D. spacing
+ * 答案：B
+ * 解析：margin 属性用于设置元素的外边距，即元素与周围元素之间的空间。
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
  */
 import { ValidatedQuestion } from './questionValidator';
 
@@ -70,6 +83,7 @@ export function parseTxtQuestions(content: string, filename: string = 'unknown.t
         currentLineIndex = 1;
       }
 
+<<<<<<< HEAD
       // 检查是否是填空题（包含____）
       const isFillBlank = questionText.includes('____');
       
@@ -138,6 +152,30 @@ export function parseTxtQuestions(content: string, filename: string = 'unknown.t
           
           // 检查是否是答案行
           if (line.match(/^答案[：:]?\s*([A-Z])/i)) {
+=======
+      // 解析选项（A. B. C. D. 格式）
+      for (let i = currentLineIndex; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // 检查是否是答案行
+        if (line.match(/^答案[：:]?\s*([A-Z])/i)) {
+          const match = line.match(/^答案[：:]?\s*([A-Z])/i);
+          if (match) {
+            answerText = match[1].toUpperCase();
+            currentLineIndex = i + 1;
+          }
+          break;
+        }
+
+        // 检查是否是选项行
+        const choiceMatch = line.match(/^([A-Z])[.)]\s*(.+)/);
+        if (choiceMatch) {
+          const choiceText = choiceMatch[2].trim();
+          choices.push(choiceText);
+        } else {
+          // 如果遇到非选项行，可能是答案或解析
+          if (line.match(/^答案/i)) {
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
             const match = line.match(/^答案[：:]?\s*([A-Z])/i);
             if (match) {
               answerText = match[1].toUpperCase();
@@ -145,6 +183,7 @@ export function parseTxtQuestions(content: string, filename: string = 'unknown.t
             }
             break;
           }
+<<<<<<< HEAD
 
           // 检查是否是选项行
           const choiceMatch = line.match(/^([A-Z])[.)]\s*(.+)/);
@@ -213,6 +252,59 @@ export function parseTxtQuestions(content: string, filename: string = 'unknown.t
         });
       }
 
+=======
+        }
+        currentLineIndex = i + 1;
+      }
+
+      // 解析解析/解释（答案后面的内容）
+      if (currentLineIndex < lines.length) {
+        const explanationLines: string[] = [];
+        for (let i = currentLineIndex; i < lines.length; i++) {
+          const line = lines[i];
+          if (line.match(/^解析[：:]?\s*(.+)/i)) {
+            explanationLines.push(line.replace(/^解析[：:]?\s*/i, ''));
+          } else if (line.length > 0) {
+            // 答案行之后的所有非空行都视为解析
+            if (answerText || explanationLines.length > 0) {
+              explanationLines.push(line);
+            }
+          }
+        }
+        explanation = explanationLines.join(' ').trim();
+      }
+
+      // 验证
+      if (!questionText) {
+        errors.push({ line: blockIndex + 1, reason: '缺少题目内容' });
+        return;
+      }
+
+      if (choices.length < 2) {
+        errors.push({ line: blockIndex + 1, reason: '选项数量不足（至少需要2个选项）' });
+        return;
+      }
+
+      if (!answerText) {
+        errors.push({ line: blockIndex + 1, reason: '缺少答案' });
+        return;
+      }
+
+      const answerIndex = answerText.charCodeAt(0) - 65; // A=0, B=1, C=2, D=3
+      if (answerIndex < 0 || answerIndex >= choices.length) {
+        errors.push({ line: blockIndex + 1, reason: `答案 ${answerText} 超出选项范围` });
+        return;
+      }
+
+      questions.push({
+        id: questions.length + 1,
+        question: questionText,
+        choices,
+        answerIndex,
+        explanation: explanation || '暂无解析',
+      });
+
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     } catch (error) {
       errors.push({
         line: blockIndex + 1,
@@ -223,6 +315,7 @@ export function parseTxtQuestions(content: string, filename: string = 'unknown.t
 
   // 转换为 ValidatedQuestion 格式
   const validatedQuestions: ValidatedQuestion[] = questions
+<<<<<<< HEAD
     .filter(q => {
       // 检测是否是填空题
       const isFillBlank = q.question.includes('____');
@@ -231,6 +324,9 @@ export function parseTxtQuestions(content: string, filename: string = 'unknown.t
       
       return q.choices.length >= minChoices && q.answerIndex >= 0 && q.answerIndex < q.choices.length;
     })
+=======
+    .filter(q => q.choices.length >= 2 && q.answerIndex >= 0 && q.answerIndex < q.choices.length)
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     .map(q => ({
       id: q.id,
       question: q.question.trim(),

@@ -5,7 +5,12 @@ interface QuestionFile {
   size: number;
   modified: string;
   type: 'txt' | 'json';
+<<<<<<< HEAD
   path: string;
+=======
+  relativePath?: string;
+  folder?: string;
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 }
 
 interface FileSelectorProps {
@@ -22,16 +27,25 @@ export default function FileSelector({ selectedFiles, onFilesChange, selectedFol
     loadFiles();
   }, [selectedFolder]);
 
+<<<<<<< HEAD
   // 根据文件夹过滤文件 - 基于文件的相对路径
+=======
+  // 根据文件夹过滤文件 - 基于文件的文件夹信息
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   const filterFilesByFolder = (files: QuestionFile[]) => {
     if (selectedFolder === 'all') {
       return files;
     }
     
     return files.filter(file => {
+<<<<<<< HEAD
       // 使用 path 的頂層目錄作為分類（兼容 Windows 反斜線）
       const normalizedPath = file.path.replace(/\\/g, '/');
       const fileFolder = normalizedPath.includes('/') ? normalizedPath.split('/')[0].toLowerCase() : '';
+=======
+      // 使用文件的folder字段来判断所属文件夹
+      const fileFolder = file.folder?.toLowerCase() || '';
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       
       switch (selectedFolder) {
         case 'chinese':
@@ -82,9 +96,14 @@ export default function FileSelector({ selectedFiles, onFilesChange, selectedFol
   };
 
   const toggleFile = (file: QuestionFile) => {
+<<<<<<< HEAD
     // 使用 API 返回的 path（相對於 data/ 的路徑）
     const normalizedPath = file.path.replace(/\\/g, '/');
     const filePath = normalizedPath;
+=======
+    // 使用完整的文件路径（包含文件夹路径）
+    const filePath = file.relativePath ? `${file.relativePath}/${file.name}` : file.name;
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     
     if (selectedFiles.includes(filePath)) {
       onFilesChange(selectedFiles.filter(f => f !== filePath));
@@ -94,7 +113,11 @@ export default function FileSelector({ selectedFiles, onFilesChange, selectedFol
   };
 
   const selectAll = () => {
+<<<<<<< HEAD
     onFilesChange(files.map(f => f.path.replace(/\\/g, '/')));
+=======
+    onFilesChange(files.map(f => f.relativePath ? `${f.relativePath}/${f.name}` : f.name));
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   };
 
   const deselectAll = () => {
@@ -153,7 +176,11 @@ export default function FileSelector({ selectedFiles, onFilesChange, selectedFol
 
       <div className="space-y-2 overflow-y-auto flex-1 min-h-0">
         {files.map((file) => {
+<<<<<<< HEAD
           const filePath = file.path.replace(/\\/g, '/');
+=======
+          const filePath = file.relativePath ? `${file.relativePath}/${file.name}` : file.name;
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
           const isSelected = selectedFiles.includes(filePath);
           return (
           <label
@@ -202,3 +229,7 @@ export default function FileSelector({ selectedFiles, onFilesChange, selectedFol
     </div>
   );
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950

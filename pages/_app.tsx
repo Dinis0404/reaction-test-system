@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import '../app/globals.css';
+<<<<<<< HEAD
 import { useEffect } from 'react';
 import { ensureDefaultUsers } from '../lib/users';
 
@@ -21,3 +22,13 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 }
 
+=======
+
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
+}
+
+
+
+
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950

@@ -1,14 +1,23 @@
+<<<<<<< HEAD
 import { useRef, useState, useEffect } from 'react';
 
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 interface QuestionCardProps {
   question: {
     id: number;
     question: string;
     choices: string[];
+<<<<<<< HEAD
     type?: 'multiple_choice' | 'fill_blank';
   };
   selectedAnswer: number | null;
   onAnswerSelect: (questionId: number, answerIndex: number, userInput?: string, shouldValidate?: boolean) => void;
+=======
+  };
+  selectedAnswer: number | null;
+  onAnswerSelect: (questionId: number, answerIndex: number) => void;
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   showResult?: boolean;
   correctAnswer?: number;
   userAnswer?: number | null;
@@ -28,6 +37,7 @@ export default function QuestionCard({
   immediateCheck = false,
   isCorrect,
 }: QuestionCardProps) {
+<<<<<<< HEAD
   const inputRef = useRef<HTMLInputElement>(null);
   
   // 专门用于保存填空题用户输入的内容
@@ -175,6 +185,8 @@ export default function QuestionCard({
   }
 
   // 选择题处理逻辑（保持原有代码）
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   const getOptionClass = (index: number) => {
     let baseClass = 'flex items-start p-4 rounded-lg border-2 transition-all duration-200 ';
     
@@ -206,6 +218,11 @@ export default function QuestionCard({
     return baseClass;
   };
 
+<<<<<<< HEAD
+=======
+  const isOptionCorrect = showResult && correctAnswer !== undefined && correctAnswer === userAnswer;
+
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   return (
     <div className="bg-gray-800 rounded-2xl shadow-xl p-6 md:p-8 mb-6 border border-gray-700 hover:shadow-2xl transition-shadow duration-300">
       <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-6 leading-relaxed">

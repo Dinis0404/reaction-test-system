@@ -25,8 +25,13 @@ const nextConfig = {
   compress: true,
   // 生产环境优化
   poweredByHeader: false,
+<<<<<<< HEAD
   // 禁用trailingSlash以避免308重定向
   trailingSlash: false,
+=======
+  // Vercel兼容性：确保data目录在构建时被包含
+  trailingSlash: true,
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   // 静态资源处理
   assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
 }

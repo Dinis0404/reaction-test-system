@@ -10,7 +10,10 @@ export interface ShuffledQuestion {
   originalAnswerIndex: number; // 原始正确答案索引
   shuffledAnswerIndex: number;  // 随机化后的正确答案索引
   explanation: string;         // 题目解析
+<<<<<<< HEAD
   type: 'multiple_choice' | 'fill_blank'; // 题目类型
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 }
 
 /**
@@ -49,9 +52,12 @@ export function shuffleQuestionChoices(question: ValidatedQuestion): ShuffledQue
   // 找到原始正确答案在随机化后的新位置
   const shuffledAnswerIndex = shuffledIndices.indexOf(originalAnswerIndex);
   
+<<<<<<< HEAD
   // 检测题目类型：如果题目包含 ____ 则为填空题
   const hasFillBlank = question.question.includes('____');
   
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   return {
     id: question.id,
     question: question.question,
@@ -59,7 +65,10 @@ export function shuffleQuestionChoices(question: ValidatedQuestion): ShuffledQue
     originalAnswerIndex,
     shuffledAnswerIndex,
     explanation: question.explanation || '暂无解析',
+<<<<<<< HEAD
     type: hasFillBlank ? 'fill_blank' : 'multiple_choice',
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   };
 }
 
@@ -84,6 +93,7 @@ export function getRandomQuestions(
     : shuffledQuestions;
 
   // 随机打散选项
+<<<<<<< HEAD
   return selectedQuestions.map(q => {
     if (shuffleChoices) {
       return shuffleQuestionChoices(q);
@@ -101,6 +111,18 @@ export function getRandomQuestions(
       };
     }
   });
+=======
+  return selectedQuestions.map(q => 
+    shuffleChoices ? shuffleQuestionChoices(q) : {
+      id: q.id,
+      question: q.question,
+      choices: q.choices,
+      originalAnswerIndex: q.answerIndex,
+      shuffledAnswerIndex: q.answerIndex,
+      explanation: q.explanation || '暂无解析',
+    }
+  );
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 }
 
 

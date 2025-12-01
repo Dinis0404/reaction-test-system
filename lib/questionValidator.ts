@@ -8,7 +8,10 @@ export interface Question {
   choices: string[];
   answerIndex: number;
   explanation?: string;
+<<<<<<< HEAD
   type?: 'multiple_choice' | 'fill_blank';
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 }
 
 export interface ValidatedQuestion extends Question {
@@ -32,6 +35,7 @@ export function validateQuestion(question: any): question is ValidatedQuestion {
     return false;
   }
 
+<<<<<<< HEAD
   // 检测是否是填空题
   const isFillBlank = question.question.includes('____');
   
@@ -39,6 +43,9 @@ export function validateQuestion(question: any): question is ValidatedQuestion {
   const minChoices = isFillBlank ? 1 : 2;
   
   if (!Array.isArray(question.choices) || question.choices.length < minChoices) {
+=======
+  if (!Array.isArray(question.choices) || question.choices.length < 2) {
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     return false;
   }
 
@@ -104,6 +111,7 @@ export function validateQuestions(questions: any[]): {
       return;
     }
 
+<<<<<<< HEAD
     // 检测是否是填空题
     const isFillBlank = q.question.includes('____');
     
@@ -112,6 +120,10 @@ export function validateQuestions(questions: any[]): {
     
     if (!Array.isArray(q.choices) || q.choices.length < minChoices) {
       invalid.push({ question: q, reason: `题目 ${index + 1}：choices 必须是至少包含${minChoices}个选项的数组` });
+=======
+    if (!Array.isArray(q.choices) || q.choices.length < 2) {
+      invalid.push({ question: q, reason: `题目 ${index + 1}：choices 必须是至少包含2个选项的数组` });
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       return;
     }
 

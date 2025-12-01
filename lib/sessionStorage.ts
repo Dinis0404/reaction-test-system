@@ -9,7 +9,10 @@ import { ShuffledQuestion } from './questionShuffler';
 export interface QuizAnswer {
   questionId: number;
   selectedIndex: number;
+<<<<<<< HEAD
   userInput?: string; // 用于存储填空题用户输入的内容
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   timestamp?: number;
 }
 
@@ -178,6 +181,7 @@ class SessionStorage {
       const answer = sessionData.answers.find(a => a.questionId === q.id);
       const selectedIndex = answer?.selectedIndex ?? null;
       
+<<<<<<< HEAD
       // 检查是否是填空题
       const isFillBlank = q.question.includes('____');
       
@@ -206,6 +210,12 @@ class SessionStorage {
         // 选择题的正常逻辑
         isCorrect = selectedIndex !== null && selectedIndex === q.shuffledAnswerIndex;
       }
+=======
+      // 正确判断逻辑：
+      // 1. 如果用户没有选择答案（selectedIndex为null），视为错误
+      // 2. 如果用户选择了答案，判断是否正确
+      const isCorrect = selectedIndex !== null && selectedIndex === q.shuffledAnswerIndex;
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       
       if (isCorrect) {
         correctCount++;

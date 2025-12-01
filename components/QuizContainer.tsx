@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react';
 import QuestionCard from './QuestionCard';
 import FileSelector from './FileSelector';
+<<<<<<< HEAD
 import { saveResult } from '../lib/analytics';
 import { getActiveUserId } from '../lib/users';
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 
 interface Question {
   id: number;
   question: string;
   choices: string[];
+<<<<<<< HEAD
   type?: 'multiple_choice' | 'fill_blank';
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 }
 
 interface QuizResult {
@@ -43,17 +49,24 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
   const [results, setResults] = useState<QuizResult[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+<<<<<<< HEAD
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 
   const [isPracticeMode, setIsPracticeMode] = useState(false);
   const [originalResults, setOriginalResults] = useState<QuizResult[] | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
   const [showFileSelector, setShowFileSelector] = useState(true);
   const [questionAnswers, setQuestionAnswers] = useState<Map<number, QuestionAnswer>>(new Map());
+<<<<<<< HEAD
   const [currentQuestionChecked, setCurrentQuestionChecked] = useState(false);
   const [useAllQuestions, setUseAllQuestions] = useState(false);
+=======
+  const [useAllQuestions, setUseAllQuestions] = useState(false); // 是否使用所有题目
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
 
   useEffect(() => {
     // 不自动开始，等待用户选择文件
@@ -65,12 +78,23 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
       setError(null);
       setShowFileSelector(false);
       
+<<<<<<< HEAD
       const params = new URLSearchParams();
+=======
+      // 构建URL参数对象
+      const params = new URLSearchParams();
+      
+      // 文件参数
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       const filesToUse = files || selectedFiles;
       if (filesToUse.length > 0) {
         params.append('files', filesToUse.join(','));
       }
       
+<<<<<<< HEAD
+=======
+      // 数量参数：只有在不使用所有题目时才传递count
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       if (!useAllQuestions) {
         params.append('count', (count || 10).toString());
       }
@@ -78,10 +102,24 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
       const queryString = params.toString();
       const url = queryString ? `/api/quiz/new?${queryString}` : '/api/quiz/new';
       
+<<<<<<< HEAD
+=======
+      console.log('请求URL:', url);
+      console.log('参数:', {
+        useAllQuestions,
+        count: useAllQuestions ? 'all' : (count || 10),
+        files: filesToUse
+      });
+      
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       const response = await fetch(url);
       
       if (!response.ok) {
         const errorText = await response.text();
+<<<<<<< HEAD
+=======
+        console.error('API响应错误:', response.status, errorText);
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
         let errorMessage = '创建测验失败';
         
         try {
@@ -96,37 +134,66 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
 
       const data = await response.json();
       
+<<<<<<< HEAD
+=======
+      // 检查返回的题目数量是否与预期一致
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       if (useAllQuestions && data.questions.length === 0) {
         throw new Error('没有找到可用的题目，请检查题库文件');
       }
       
+<<<<<<< HEAD
       console.log('创建测验成功，题目数量:', data.questions.length);
       
+=======
+      if (!useAllQuestions && data.questions.length !== (count || 10)) {
+        console.warn(`预期 ${count || 10} 题，实际返回 ${data.questions.length} 题`);
+      }
+      
+      console.log('创建测验成功，题目数量:', data.questions.length);
+      
+      // 保存sessionData用于后续API调用
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       setSessionData(data.sessionData);
       setQuestions(data.questions);
       setAnswers({});
       setCurrentQuestionIndex(0);
       setResults(null);
+<<<<<<< HEAD
       setQuestionAnswers(new Map());
       setCurrentQuestionChecked(false);
+=======
+
+      setQuestionAnswers(new Map());
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       setError(null);
     } catch (err) {
       console.error('创建测验错误:', err);
       setError(err instanceof Error ? err.message : '加载题目时发生错误');
+<<<<<<< HEAD
       setShowFileSelector(true);
+=======
+      setShowFileSelector(true); // 出错时返回文件选择界面
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     } finally {
       setLoading(false);
     }
   };
 
+<<<<<<< HEAD
   const handleAnswerSelect = async (questionId: number, answerIndex: number, userInput?: string, shouldValidate?: boolean) => {
     console.log(`handleAnswerSelect called: questionId=${questionId}, answerIndex=${answerIndex}, userInput="${userInput}", shouldValidate=${shouldValidate}`);
     
     // 保存答案选择
+=======
+  const handleAnswerSelect = async (questionId: number, answerIndex: number) => {
+    // 立即更新選中的答案
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     setAnswers(prev => ({
       ...prev,
       [questionId]: answerIndex,
     }));
+<<<<<<< HEAD
     
     // 如果只是填空题的输入（没有触发验证），只保存答案，不进行检查
     if (userInput !== undefined && !shouldValidate) {
@@ -134,6 +201,10 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
     }
 
     // 如果是练习模式且答案已验证，直接使用本地结果
+=======
+
+    // 如果是練習模式，直接從原始結果獲取答案
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     if (isPracticeMode && originalResults) {
       const originalResult = originalResults.find(r => r.questionId === questionId);
       if (originalResult) {
@@ -154,6 +225,7 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
       }
     }
 
+<<<<<<< HEAD
     // 只有在当前题目和选择的题目一致时才进行检查
     const currentQuestion = questions[currentQuestionIndex];
     if (currentQuestion && currentQuestion.id === questionId) {
@@ -247,6 +319,80 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
       console.log(`有 ${unansweredCount} 題未回答`);
       if (!confirm(`還有 ${unansweredCount} 題未回答，確定要提交所有答案嗎？`)) {
         console.log('用戶取消提交');
+=======
+    // 如果是正式模式，調用API檢查答案
+    try {
+      const response = await fetch(`/api/quiz/check`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionData,
+          questionId,
+          selectedIndex: answerIndex,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('API返回的检查结果:', data); // 调试日志
+        setQuestionAnswers(prev => {
+          const newMap = new Map(prev);
+          newMap.set(questionId, {
+            questionId,
+            selectedIndex: answerIndex,
+            correctIndex: data.correctIndex,
+            isCorrect: data.isCorrect,
+            explanation: data.explanation || '暂无解析',
+            checked: true,
+          });
+          return newMap;
+        });
+        
+
+      } else {
+        // 如果session过期，重新开始
+        const errorData = await response.json().catch(() => ({}));
+        if (response.status === 404 && errorData.error?.includes('Session')) {
+          alert('Session已过期，请重新开始练习');
+          handleRestart();
+        }
+      }
+    } catch (error) {
+      console.error('檢查答案錯誤:', error);
+    }
+  };
+
+
+
+  const submitAllAnswers = async () => {
+    // 如果是练习模式，直接显示本地结果
+    if (isPracticeMode) {
+      const localResults: QuizResult[] = questions.map(q => {
+        const selectedIndex = answers[q.id] ?? null;
+        const originalResult = originalResults?.find(r => r.questionId === q.id);
+        const correctIndex = originalResult?.correctIndex ?? 0;
+        
+        return {
+          questionId: q.id,
+          question: q.question,
+          choices: q.choices,
+          selectedIndex,
+          correctIndex,
+          isCorrect: selectedIndex === correctIndex,
+          explanation: originalResult?.explanation || '暂无解释',
+        };
+      });
+      
+      setResults(localResults);
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (Object.keys(answers).length !== questions.length) {
+      if (!confirm('還有題目未回答，確定要提交所有答案嗎？')) {
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
         setIsSubmitting(false);
         return;
       }
@@ -255,6 +401,7 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
     setIsSubmitting(true);
     
     try {
+<<<<<<< HEAD
       console.log('开始提交答案...', { sessionData, questions, answers });
       
       // 驗證必要數據
@@ -283,6 +430,25 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
       const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超時
       
       const answerResponse = await fetch('/api/quiz/complete', {
+=======
+      console.log('开始提交答案...');
+      console.log('Session ID:', sessionData?.sessionId);
+      console.log('题目数量:', questions.length);
+      console.log('答案数量:', Object.keys(answers).length);
+
+      // 提交所有答案 - 只提交用户实际选择的答案
+      const answerArray = questions
+        .filter(q => answers[q.id] !== undefined) // 只处理有答案的题目
+        .map(q => ({
+          questionId: q.id,
+          selectedIndex: answers[q.id],
+        }));
+
+      console.log('提交的答案数组:', answerArray);
+
+      // 提交答案
+      const answerResponse = await fetch(`/api/quiz/answer`, {
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -291,6 +457,7 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
           sessionData,
           answers: answerArray,
         }),
+<<<<<<< HEAD
         signal: controller.signal
       });
       
@@ -354,13 +521,103 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
         alert('提交答案時發生錯誤: ' + (err instanceof Error ? err.message : '未知錯誤'));
       }
     } finally {
+=======
+      });
+
+      if (!answerResponse.ok) {
+        const errorData = await answerResponse.json().catch(() => ({}));
+        throw new Error(errorData.error || '提交答案失敗');
+      }
+
+      const answerResult = await answerResponse.json();
+      console.log('答案提交成功:', answerResult);
+
+      // 更新sessionData
+      let updatedSessionData = sessionData;
+      if (answerResult.sessionData) {
+        updatedSessionData = answerResult.sessionData;
+        setSessionData(updatedSessionData);
+      }
+
+      // 立即获取结果 - 使用更新后的sessionData
+      await fetchResults(updatedSessionData);
+    } catch (err) {
+      console.error('提交答案錯誤:', err);
+      alert('提交答案時發生錯誤: ' + (err instanceof Error ? err.message : '未知錯誤'));
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       setIsSubmitting(false);
     }
   };
 
+<<<<<<< HEAD
   // 已棄用：現在使用 submitAllAnswers 來處理結果
   const fetchResults = async (customSessionData?: any) => {
     console.log('警告：fetchResults 已棄用，不應該被調用');
+=======
+  const fetchResults = async (customSessionData?: any) => {
+    try {
+      const sessionDataToUse = customSessionData || sessionData;
+      console.log('开始获取结果...');
+      console.log('Session ID:', sessionDataToUse?.sessionId);
+
+      const response = await fetch(`/api/quiz/result`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionData: sessionDataToUse,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || '獲取結果失敗');
+      }
+
+      const data = await response.json();
+      console.log('API返回的结果数据:', data);
+      
+      if (!data.results) {
+        throw new Error('结果数据格式不正确');
+      }
+
+      // 验证结果数据
+      console.log('API返回 - 结果数量:', data.results.length);
+      console.log('API返回 - 正确数量:', data.correctCount);
+      console.log('API返回 - 得分:', data.score);
+      console.log('API返回 - 总题数:', data.totalQuestions);
+
+      // 确保结果数据正确
+      const validatedResults = data.results.map((result: any) => ({
+        questionId: result.questionId,
+        question: result.question,
+        choices: result.choices,
+        selectedIndex: result.selectedIndex,
+        correctIndex: result.correctIndex,
+        isCorrect: result.isCorrect,
+        explanation: result.explanation || '暂无解释',
+      }));
+
+
+      
+      // 设置结果
+      setResults(validatedResults);
+      setOriginalResults(validatedResults);
+      
+      // 更新sessionData
+      if (data.sessionData) {
+        setSessionData(data.sessionData);
+      }
+      
+      console.log('结果获取成功');
+    } catch (err) {
+      console.error('獲取結果錯誤:', err);
+      alert('獲取結果時發生錯誤: ' + (err instanceof Error ? err.message : '未知錯誤'));
+    } finally {
+      setIsSubmitting(false);
+    }
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   };
 
   const handleRestart = () => {
@@ -372,7 +629,11 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
     setSessionData(null);
     setAnswers({});
     setCurrentQuestionIndex(0);
+<<<<<<< HEAD
     setCurrentQuestionChecked(false);
+=======
+
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     setQuestionAnswers(new Map());
   };
 
@@ -381,6 +642,7 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
       alert('請至少選擇一個題目檔案！');
       return;
     }
+<<<<<<< HEAD
     if (useAllQuestions) {
       startNewQuiz(undefined, selectedFiles);
     } else {
@@ -442,6 +704,16 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
     });
   };
 
+=======
+    // 根据useAllQuestions状态决定是否传递count参数
+    if (useAllQuestions) {
+      startNewQuiz(undefined, selectedFiles); // 不传count参数，让API返回所有题目
+    } else {
+      startNewQuiz(10, selectedFiles); // 传count=10，返回10题
+    }
+  };
+
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   const handlePracticeWrongAnswers = () => {
     if (!results) return;
 
@@ -458,14 +730,28 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
       return;
     }
 
+<<<<<<< HEAD
+=======
+    // 进入错题练习模式（本地模式，不使用session）
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     setQuestions(wrongQuestions);
     setAnswers({});
     setCurrentQuestionIndex(0);
     setResults(null);
+<<<<<<< HEAD
     setIsPracticeMode(true);
     setSessionData(null);
   };
 
+=======
+
+    setIsPracticeMode(true);
+    setSessionData(null); // 练习模式不需要session
+    // 保留 originalResults 以便在练习模式中获取正确答案和解释
+  };
+
+  // 显示文件选择界面
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
   if (showFileSelector && questions.length === 0) {
     return (
       <div className="w-full min-h-[calc(100vh-200px)] flex flex-col">
@@ -485,6 +771,10 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
 
           <div className="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700 flex-shrink-0 mt-6 w-full">
             <div className="flex flex-col gap-4">
+<<<<<<< HEAD
+=======
+              {/* 题目数量选择 */}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
               <div className="flex items-center justify-center gap-4">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -509,6 +799,10 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
                 </label>
               </div>
               
+<<<<<<< HEAD
+=======
+              {/* 开始练习按钮 */}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
               <div className="flex justify-center">
                 <button
                   onClick={handleStartQuiz}
@@ -553,13 +847,35 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
   }
 
   if (results) {
+<<<<<<< HEAD
+=======
+    // 使用后端返回的结果数据，确保一致性
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
     const correctCount = results.filter(r => r.isCorrect).length;
     const totalQuestions = results.length;
     const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
     
+<<<<<<< HEAD
     return (
       <div className="p-4 md:p-6">
         <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 rounded-2xl shadow-2xl p-8 md:p-12 mb-8 text-center border border-gray-700 relative overflow-hidden">
+=======
+    // 调试日志：验证结果数据
+    console.log('后端返回结果 - 题目数量:', results.length);
+    console.log('后端返回结果 - 正确数量:', correctCount);
+    console.log('后端返回结果 - 得分:', score);
+    
+    // 验证每个题目的结果
+    results.forEach((result, index) => {
+      console.log(`题目 ${index + 1} (ID: ${result.questionId}): 选择=${result.selectedIndex}, 正确答案=${result.correctIndex}, 是否正确=${result.isCorrect}`);
+    });
+
+    return (
+      <div className="p-4 md:p-6">
+        {/* 分数统计卡片 - 深色主题优化 */}
+        <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 rounded-2xl shadow-2xl p-8 md:p-12 mb-8 text-center border border-gray-700 relative overflow-hidden">
+          {/* 背景装饰 */}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-purple-900/10 to-pink-900/10"></div>
           
           <div className="relative z-10">
@@ -583,6 +899,10 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
               {isPracticeMode ? '錯題練習完成' : '練習完成'}
             </h2>
             
+<<<<<<< HEAD
+=======
+            {/* 分数显示 */}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
             <div className="mb-6">
               <div 
                 className="text-7xl md:text-8xl font-black mb-2 bg-gradient-to-r bg-clip-text text-transparent"
@@ -599,6 +919,10 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
               <div className="text-2xl md:text-3xl font-bold text-gray-300">分</div>
             </div>
             
+<<<<<<< HEAD
+=======
+            {/* 成绩等级 */}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
             <div className="mb-6">
               <span className={`inline-block px-4 py-2 rounded-full text-sm font-bold ${
                 score >= 90 ? 'bg-green-900/30 text-green-300 border border-green-600/30' :
@@ -614,6 +938,10 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
               答對 <span className="font-bold text-blue-400">{correctCount}</span> / <span className="font-bold">{results.length}</span> 題
             </p>
             
+<<<<<<< HEAD
+=======
+            {/* 操作按钮 */}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={handleRestart}
@@ -636,6 +964,7 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
                   練習錯題
                 </button>
               )}
+<<<<<<< HEAD
               <a
                 href="/report"
                 className="px-8 py-4 bg-gradient-to-r from-sky-600 to-cyan-600 text-white rounded-xl hover:from-sky-700 hover:to-cyan-700 transition-all font-bold text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-gray-900 min-h-[56px] flex items-center justify-center gap-2"
@@ -670,10 +999,16 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
               >
                 {isAnalyzing ? '分析中...' : 'AI 分析成績'}
               </button>
+=======
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
             </div>
           </div>
         </div>
 
+<<<<<<< HEAD
+=======
+        {/* 详细结果 */}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
         <div className="bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-700 mb-6">
           <h3 className="text-xl font-bold text-gray-100 mb-4 flex items-center gap-2">
             <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -698,6 +1033,7 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
           </div>
         </div>
 
+<<<<<<< HEAD
         {aiAnalysis && (
           <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-xl p-6 border border-gray-700 mb-6">
             <h3 className="text-xl font-bold text-gray-100 mb-4">AI 分析</h3>
@@ -708,6 +1044,9 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
           <div className="bg-red-900/30 border border-red-700 rounded-2xl p-4 text-red-200 mb-6">{analysisError}</div>
         )}
 
+=======
+        {/* 题目详情 */}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
         <div className="space-y-6">
           <h3 className="text-xl font-bold text-gray-100 mb-4 flex items-center gap-2">
             <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -745,6 +1084,10 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
 
   return (
     <div className="p-4 md:p-6">
+<<<<<<< HEAD
+=======
+      {/* 进度和题目计数 */}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
       <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl shadow-xl p-6 mb-6 border border-gray-700">
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center gap-2">
@@ -774,19 +1117,31 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
         </div>
       </div>
 
+<<<<<<< HEAD
       {currentQuestion && (() => {
         const answerInfo = questionAnswers.get(currentQuestion.id);
         // 只有当前题目的答案被检查时才显示结果
         const shouldShowResult = answerInfo?.checked ?? false;
         
+=======
+      {/* 题目卡片 */}
+      {currentQuestion && (() => {
+        const answerInfo = questionAnswers.get(currentQuestion.id);
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
         return (
           <QuestionCard
             question={currentQuestion}
             selectedAnswer={answers[currentQuestion.id] ?? null}
             onAnswerSelect={handleAnswerSelect}
+<<<<<<< HEAD
             immediateCheck={shouldShowResult}
             isCorrect={answerInfo?.isCorrect}
             showResult={shouldShowResult}
+=======
+            immediateCheck={answerInfo?.checked ?? false}
+            isCorrect={answerInfo?.isCorrect}
+            showResult={answerInfo?.checked ?? false}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
             correctAnswer={answerInfo?.correctIndex}
             userAnswer={answerInfo?.selectedIndex ?? null}
             explanation={answerInfo?.explanation}
@@ -794,10 +1149,18 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
         );
       })()}
 
+<<<<<<< HEAD
       <div className="bg-gray-800 rounded-2xl shadow-xl p-4 md:p-6 border border-gray-700">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <button
             onClick={handlePrevQuestion}
+=======
+      {/* 导航和操作按钮 */}
+      <div className="bg-gray-800 rounded-2xl shadow-xl p-4 md:p-6 border border-gray-700">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <button
+            onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
             disabled={currentQuestionIndex === 0}
             className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-600 text-gray-200 rounded-xl hover:from-gray-600 hover:to-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-semibold shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900 min-h-[48px] flex items-center justify-center gap-2"
           >
@@ -821,7 +1184,11 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
           <div className="flex gap-3 w-full sm:w-auto">
             {currentQuestionIndex < questions.length - 1 ? (
               <button
+<<<<<<< HEAD
                 onClick={handleNextQuestion}
+=======
+                onClick={() => setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
                 className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all font-semibold shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 min-h-[48px] flex items-center justify-center gap-2"
               >
                 下一題
@@ -831,6 +1198,7 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
               </button>
             ) : (
               <button
+<<<<<<< HEAD
                 onClick={() => {
                   console.log('========== 點擊結束練習按鈕 ==========')
                   console.log('當前是否為練習模式:', isPracticeMode);
@@ -845,6 +1213,9 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
                     console.log('正在提交中，跳過');
                   }
                 }}
+=======
+                onClick={submitAllAnswers}
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
                 disabled={isSubmitting}
                 className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900 min-h-[48px] text-base md:text-lg flex items-center justify-center gap-2"
               >
@@ -855,7 +1226,11 @@ export default function QuizContainer({ selectedFolder = 'all' }: QuizContainerP
                   </>
                 ) : (
                   <>
+<<<<<<< HEAD
                     {isPracticeMode ? '完成練習' : '結束練習'}
+=======
+                    結束練習
+>>>>>>> 79fe0b00784f73255711c3a8084566819cf8a950
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
